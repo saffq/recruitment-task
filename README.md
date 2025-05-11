@@ -72,7 +72,7 @@ If the directory does not exist, it will be created automatically by the app.
 - **Maintenance**
   - With `dueDate`: `status = zaplanowano`
   - Without: `status = nowy`
-- **Failure**
+- **Malfunction**
   - With `dueDate`: `status = termin`
   - Without: `status = nowy`
   - Priority:
@@ -120,5 +120,5 @@ docker-compose.yml            → App + test services
 ## ✅ Notes
 
 - All logs go to STDOUT
-- Errors during message parsing are logged and stored in `unprocessed.json`
+- Errors during message parsing are logged and stored in `failures.json`
 - Fully structured and extendable design for future rule/format updates
