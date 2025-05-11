@@ -1,0 +1,32 @@
+#!/usr/bin/env php
+
+<?php
+require __DIR__ . '/../vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use App\Command\ProcessMessagesCommand;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+$container = new ContainerBuilder();
+
+
+$container->register('logger', Logger::class)
+    ->addArgument('app')
+    ->addMethodCall('pushHandler', [new StreamHandler('php://stdout', Logger::INFO)]);
+
+
+$container->register('app.message_processor', App\Service\MessageProcessor::class)
+    ->addArgument(new Reference('logger'));
+
+
+$container->register('app.command.process_messages', ProcessMessagesCommand::class)
+    ->addArgument(new Reference('app.message_processor'))
+    ->addTag('console.command');
+
+
+$application = new Application();
+$application->add($container->get('app.command.process_messages'));
+$application->run();
