@@ -35,12 +35,6 @@ docker-compose build
 docker-compose up
 ```
 
-
-or 
-```bash 
-php bin/console process:messages data/recruitment-task-source.json
-
-```
 This will process the input file and generate result files.
 
 ---
